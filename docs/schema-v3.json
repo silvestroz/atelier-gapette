@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://la-gapette.fr/atelier-gapette/schema-v3.json",
+  "title": "Atelier Gapette — configuration v3",
+  "description": "Manufacturing choices for one cap (v3: curvature, rotation, 12 fonts, size 30–250 %). Validated identically by assets/src/schema.js and includes/class-ag-schema.php. v1 documents are accepted and converted (curve 100, rotation 0). Any unknown key is rejected.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "renderer_version",
+    "model_id",
+    "asset_version",
+    "pattern_id",
+    "colors",
+    "texts",
+    "image"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 3
+    },
+    "renderer_version": {
+      "const": "decal-6",
+      "description": "decal-6 (0.11.1): positions in millimetres on the flat visor; for the underside, mirrored frame (outer edge at the top, read with the visor up). decal-1 to decal-5 documents are converted on load."
+    },
+    "model_id": {
+      "const": "gapette-standard-v1"
+    },
+    "asset_version": {
+      "const": "materials-v1"
+    },
+    "pattern_id": {
+      "enum": [
+        "peloton",
+        "stripe",
+        "check",
+        "dot",
+        "chevron",
+        "plain",
+        "breton",
+        "wave",
+        "confetti",
+        "tartan",
+        "sprint",
+        "contour"
+      ]
+    },
+    "colors": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "base",
+        "accent",
+        "light",
+        "brim",
+        "trim"
+      ],
+      "properties": {
+        "base": {
+          "$ref": "#/$defs/hex",
+          "description": "Fabric"
+        },
+        "accent": {
+          "$ref": "#/$defs/hex",
+          "description": "Pattern"
+        },
+        "light": {
+          "$ref": "#/$defs/hex",
+          "description": "Details"
+        },
+        "brim": {
+          "$ref": "#/$defs/hex",
+          "description": "Visor"
+        },
+        "trim": {
+          "$ref": "#/$defs/hex",
+          "description": "Piping"
+        }
+      }
+    },
+    "texts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "description": "1 to 3 texts. With several texts, no empty value. A text may slightly overhang the visor edge (4 mm at most): the part outside the visor is not printed.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "value",
+          "side",
+          "font_id",
+          "size_percent",
+          "color",
+          "outline",
+          "curve",
+          "rotation",
+          "position"
+        ],
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "24 graphemes max, spaces included. Character set: A–Z a–z 0–9, Latin accented letters (À–ÿ, Œ œ), space and . , ' ’ ! ? & : ; ( ) / + # @ * \" « » … € -. Never HTML.",
+            "pattern": "^[A-Za-z0-9À-ÖØ-öø-ÿŒœ .,'’!?&:;()/+#@*\"«»…€-]*$"
+          },
+          "side": {
+            "enum": [
+              "top",
+              "bottom"
+            ],
+            "description": "Top or underside of the visor"
+          },
+          "font_id": {
+            "enum": [
+              "sport-v1",
+              "athletic-v1",
+              "condensed-v1",
+              "racing-v1",
+              "slab-v1",
+              "varsity-v1",
+              "retro-v1",
+              "script-v1",
+              "elegant-v1",
+              "brush-v1",
+              "marker-v1",
+              "mono-v1"
+            ]
+          },
+          "size_percent": {
+            "type": "integer",
+            "minimum": 30,
+            "maximum": 250,
+            "description": "Size actually rendered: reduced automatically if the text does not fit on the visor (e.g. along the axis)."
+          },
+          "color": {
+            "$ref": "#/$defs/hex"
+          },
+          "outline": {
+            "type": "boolean"
+          },
+          "curve": {
+            "type": "integer",
+            "minimum": -100,
+            "maximum": 100,
+            "description": "Curvature: 100 = follows the visor curve, 0 = straight, negative = reversed arc."
+          },
+          "rotation": {
+            "type": "integer",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Rotation in degrees in the visor plane: 0 = parallel to the edge, -90 = along the axis (reading from the visor towards the crown, bottom to top), +90 = along the axis the other way."
+          },
+          "position": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "x",
+              "y"
+            ],
+            "description": "Millimetres on the flat visor (decal-6): origin at mid-depth on the centre line, x to the right; top: y from the seam (−) to the outer edge (+); underside: mirrored frame, y from the outer edge (−) to the seam (+). Valento Summit visor, 155 × 55 mm. The engine also clamps the position to keep it on the visor.",
+            "properties": {
+              "x": {
+                "type": "integer",
+                "minimum": -100,
+                "maximum": 100
+              },
+              "y": {
+                "type": "integer",
+                "minimum": -50,
+                "maximum": 50
+              }
+            }
+          }
+        }
+      }
+    },
+    "image": {
+      "type": "null",
+      "description": "Reserved: {asset_id, sha256, crop, source_dimensions} object for when photo upload is opened to orders (private uploads)."
+    }
+  },
+  "$defs": {
+    "hex": {
+      "type": "string",
+      "pattern": "^#[0-9a-f]{6}$"
+    }
+  }
+}

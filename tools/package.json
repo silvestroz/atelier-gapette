@@ -1,0 +1,2 @@
+{ "name": "atelier-gapette-build", "private": true, "type": "module",
+  "devDependencies": { "esbuild": "^0.25.0", "postcss": "^8.4.0", "postcss-prefix-selector": "^2.1.0" } }

@@ -1,0 +1,6 @@
+.DS_Store
+node_modules/
+*.zip
+# Licensed mockup photographs, not redistributed (see assets/img/README.md)
+assets/img/cap-materials.png
+assets/img/products/*.jpg

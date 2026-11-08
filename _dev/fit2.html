@@ -1,0 +1,49 @@
+<!doctype html><meta charset="utf-8"><body style="margin:0;background:#fff"><canvas id="out" width="1774" height="887"></canvas>
+<script type="module">
+import { preparePhoto, projectDecal } from '../assets/src/product-preview.js';
+const img = new Image(); img.src = '../assets/img/cap-materials.png'; await img.decode();
+// canonical crescent (mm): origin at mid-depth on the centre line, y from seam (-) to outer edge (+)
+const P = new URLSearchParams(location.search); const W = +(P.get('W') || 180), D = +P.get('D'), S = +P.get('S');
+function crescent(n = 80) {
+  const h = D + S, c = W / 2, Ro = (c * c + h * h) / (2 * h), cyo = D / 2 - Ro, Ri = (c * c + S * S) / (2 * S), cyi = -D / 2 - Ri;
+  const pts = [];
+  for (let i = 0; i <= n; i++) { const x = -c + 2 * c * i / n; pts.push([x, cyo + Math.sqrt(Ro * Ro - x * x)]); }
+  for (let i = n - 1; i > 0; i--) { const x = -c + 2 * c * i / n; pts.push([x, cyi + Math.sqrt(Ri * Ri - x * x)]); }
+  return pts;
+}
+function inside(pts, x, y) { let a = false; for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) { const [xi, yi] = pts[i], [xj, yj] = pts[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) a = !a; } return a; }
+const poly = crescent();
+const samples = [];
+for (let x = -W / 2; x <= W / 2; x += 2.5) for (let y = -D / 2 - S; y <= D / 2; y += 2) if (inside(poly, x, y)) samples.push([x, y]);
+for (const p of poly) samples.push(p);
+const res = {}; const out = document.getElementById('out').getContext('2d'); let col = 0;
+const map = (A, x, y) => { const c = Math.cos(A.t), s = Math.sin(A.t); return { x: A.ox + A.k * (x * c - y * s), y: A.oy + A.k * (x * s + y * c) }; };
+for (const view of ['top', 'bottom']) {
+  // underside (decal-6): its flat frame is the top frame mirrored (outer edge up, seam down)
+  const sg = view === 'bottom' ? -1 : 1, vpoly = poly.map(([x, y]) => [x, sg * y]), vsamples = samples.map(([x, y]) => [x, sg * y]);
+  const c = document.createElement('canvas'); c.width = c.height = 887;
+  const photo = preparePhoto(c.getContext('2d', { willReadFrequently: true }), img, view);
+  const ok = (A, tol) => { let bad = 0; for (const [x, y] of vsamples) { const l = map(A, x, y), p = projectDecal(view, l.x, l.y), X = Math.round(p.x), Y = Math.round(p.y); if (X < 0 || Y < 0 || X >= 887 || Y >= 887 || photo.region[Y * 887 + X] !== 3) { if (++bad > tol) return false; } } return true; };
+  let best = null; const tol = Math.ceil(vsamples.length * 0.005);
+  for (let k = 5; k >= 1.5 && !best; k -= 0.05)
+    for (let t = -0.06; t <= 0.0601 && !best; t += 0.03)
+      for (let ox = -120; ox <= 120 && !best; ox += 6)
+        for (let oy = -150; oy <= 100 && !best; oy += 6) { const A = { k, t, ox, oy }; if (ok(A, tol)) best = A; }
+  // refine around best
+  let A = best;
+  for (let k = best.k + 0.05; k >= best.k; k -= 0.01) { let found = null; for (let t = Math.max(-0.06, best.t - 0.03); t <= Math.min(0.06, best.t + 0.03) && !found; t += 0.01) for (let ox = best.ox - 6; ox <= best.ox + 6 && !found; ox += 1) for (let oy = best.oy - 6; oy <= best.oy + 6 && !found; oy += 1) { const B = { k, t, ox, oy }; if (ok(B, tol)) found = B; } if (found) { A = found; break; } }
+  let cov = 0, tot = 0; const c2 = Math.cos(A.t), s2 = Math.sin(A.t);
+  for (let x = -120; x <= 120; x += 2) for (let y = -80; y <= 60; y += 2) { const l = map(A, x, y), p = projectDecal(view, l.x, l.y), X = Math.round(p.x), Y = Math.round(p.y); if (X < 0 || Y < 0 || X >= 887 || Y >= 887) continue; if (photo.region[Y * 887 + X] === 3) { tot++; if (inside(vpoly, x, y)) cov++; } }
+  res[view] = { k: +A.k.toFixed(3), t: +A.t.toFixed(3), ox: A.ox, oy: A.oy, coverage: +(cov / tot).toFixed(2) };
+  out.drawImage(img, view === 'top' ? 0 : img.width / 2, 0, img.width / 2, img.height, col * 887, 0, 887, 887);
+  out.strokeStyle = '#000'; out.lineWidth = 2; out.beginPath();
+  vpoly.forEach(([x, y], i) => { const l = map(A, x, y), p = projectDecal(view, l.x, l.y); i ? out.lineTo(col * 887 + p.x, p.y) : out.moveTo(col * 887 + p.x, p.y); });
+  out.closePath(); out.stroke();
+  // text centre line (parabola following the outer edge)
+  out.strokeStyle = '#c00'; out.beginPath();
+  for (let x = -70; x <= 70; x += 2) { const Ro = (W * W / 4 + (D + S) * (D + S)) / (2 * (D + S)), y = -sg * x * x / (2 * (Ro - D / 2)); const l = map(A, x, y), p = projectDecal(view, l.x, l.y); x === -70 ? out.moveTo(col * 887 + p.x, p.y) : out.lineTo(col * 887 + p.x, p.y); }
+  out.stroke();
+  col++;
+}
+document.title = JSON.stringify(res);
+</script>

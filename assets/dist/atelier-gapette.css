@@ -1,0 +1,562 @@
+/* Atelier Gapette — scoped under .atelier-gapette (tools/build.mjs). */
+/* Local fonts (SIL OFL 1.1, see assets/fonts/LICENSE-*.txt). */
+@font-face{font-family:'AG DM Sans';src:url(../fonts/dm-sans-latin-400-normal.woff2) format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'AG DM Sans';src:url(../fonts/dm-sans-latin-500-normal.woff2) format('woff2');font-weight:500 600;font-style:normal;font-display:swap}
+@font-face{font-family:'AG DM Sans';src:url(../fonts/dm-sans-latin-700-normal.woff2) format('woff2');font-weight:700 900;font-style:normal;font-display:swap}
+@font-face{font-family:'AG Barlow Condensed';src:url(../fonts/barlow-condensed-latin-700-normal.woff2) format('woff2');font-weight:600 900;font-style:normal;font-display:swap}
+@font-face{font-family:'AG Archivo Black';src:url(../fonts/archivo-black-latin-400-normal.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:'AG Libre Baskerville';src:url(../fonts/libre-baskerville-latin-700-normal.woff2) format('woff2');font-weight:700;font-style:normal;font-display:block}
+@font-face{font-family:'AG Libre Baskerville';src:url(../fonts/libre-baskerville-latin-700-italic.woff2) format('woff2');font-weight:700;font-style:italic;font-display:block}
+@font-face{font-family:'AG Courier Prime';src:url(../fonts/courier-prime-latin-700-normal.woff2) format('woff2');font-weight:700;font-style:normal;font-display:block}
+@font-face{font-family:'AG Bebas Neue';src:url(../fonts/bebas-neue-latin-400-normal.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:'AG Oswald';src:url(../fonts/oswald-latin-600-normal.woff2) format('woff2');font-weight:600;font-style:normal;font-display:block}
+@font-face{font-family:'AG Racing Sans One';src:url(../fonts/racing-sans-one-latin-400-normal.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:'AG Alfa Slab One';src:url(../fonts/alfa-slab-one-latin-400-normal.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:'AG Graduate';src:url(../fonts/graduate-latin-400-normal.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:'AG Playfair Display';src:url(../fonts/playfair-display-latin-700-italic.woff2) format('woff2');font-weight:700;font-style:italic;font-display:block}
+@font-face{font-family:'AG Pacifico';src:url(../fonts/pacifico-latin-400-normal.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:'AG Permanent Marker';src:url(../fonts/permanent-marker-latin-400-normal.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block}
+.atelier-gapette{container:ag/inline-size;width:100%;max-width:none;font-family:var(--ag-font);color:var(--ink);background:transparent;font-synthesis:none;--ink:#14233c;--ag-accent:#f49511;--ag-accent-2:#fac811;--ag-soft:#fbecd6;--ag-fill:#f4eee1;--ag-fill-2:#ebe2cf;--ag-field:#fff;--line:#e0d6c2;--ag-line-strong:#cfc4ad;--ag-line-hover:#b3a78f;--ag-muted:#5b564b;--ag-focus:#f49511;--ag-radius:6px;--lime:var(--ag-accent-2);--ag-font:-apple-system,system-ui,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;--ag-font-head:Barlow,'AG Barlow Condensed','Arial Narrow',Arial,sans-serif;line-height:1.5;text-align:left}.atelier-gapette, .atelier-gapette *{box-sizing:border-box}.atelier-gapette button,.atelier-gapette input,.atelier-gapette select{font:inherit}.atelier-gapette button,.atelier-gapette a,.atelier-gapette input,.atelier-gapette select{-webkit-tap-highlight-color:transparent}.atelier-gapette button{cursor:pointer}.atelier-gapette button:focus-visible,.atelier-gapette a:focus-visible,.atelier-gapette input:focus-visible,.atelier-gapette select:focus-visible,.atelier-gapette .ag-viewer:focus-visible{outline:3px solid var(--ag-focus);outline-offset:4px}.atelier-gapette button{color:inherit}.atelier-gapette .ag-main{display:grid;grid-template-columns:minmax(0,1fr) 410px;max-width:1800px;margin:0 auto}.atelier-gapette .studio{min-width:0;position:relative;min-height:760px;overflow:hidden;background:radial-gradient(ellipse at 48% 48%,#fff 0%,var(--ag-fill) 68%,var(--ag-fill-2) 100%)}.atelier-gapette .studio-title{position:absolute;top:40px;left:6%;z-index:2;pointer-events:none}.atelier-gapette .eyebrow{font-size:12px;font-weight:700;letter-spacing:2px}.atelier-gapette .studio-title .ag-display{font-family:'AG Barlow Condensed','Arial Narrow',Arial,sans-serif;font-stretch:condensed;font-size:clamp(45px,4.5vw,74px);line-height:1.02;letter-spacing:-1.5px;margin:10px 0 12px;font-weight:700}.atelier-gapette .studio-title p{font-size:15px;color:var(--ag-muted);margin:0}.atelier-gapette .ag-viewer{position:absolute;inset:130px 0 80px;z-index:1;touch-action:none}.atelier-gapette .ag-viewer canvas{display:block;width:100%;height:100%;cursor:grab}.atelier-gapette .ag-viewer canvas:active{cursor:grabbing}.atelier-gapette .ag-render-error{position:absolute;inset:30%;font-size:16px;line-height:1.6}.atelier-gapette .background-word{position:absolute;bottom:140px;left:50%;transform:translateX(-50%);font-family:'AG Barlow Condensed',Impact,sans-serif;font-size:clamp(100px,15vw,240px);font-weight:800;letter-spacing:-5px;color:var(--ag-fill);opacity:.65;pointer-events:none;z-index:0}.atelier-gapette .view-controls{position:absolute;bottom:99px;left:50%;transform:translateX(-50%);display:flex;background:#ffffffc9;border:1px solid #fff;padding:5px;border-radius:30px;z-index:3;box-shadow:0 4px 16px #14233c08}.atelier-gapette .view-controls button{border:0;border-radius:23px;background:transparent;font-size:14px;padding:10px 21px}.atelier-gapette .view-controls button.active{background:var(--ink);color:white}.atelier-gapette .studio-footer{position:absolute;bottom:28px;left:6%;right:6%;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:3;font-size:12px;color:var(--ag-muted)}.atelier-gapette .text-button{font-size:12px;border:none;background:transparent;padding:8px 0}.atelier-gapette .model-tag{position:absolute;top:230px;left:6%;display:flex;flex-direction:column;gap:6px;z-index:2;pointer-events:none}.atelier-gapette .model-tag span{font-size:12px;color:var(--ag-muted)}.atelier-gapette .model-tag span:first-child{font-size:11px;letter-spacing:1.5px}.atelier-gapette .model-tag strong{font-size:20px}.atelier-gapette .settings{background:#fff;padding:29px 28px 24px;border-left:1px solid var(--line)}.atelier-gapette .settings-heading{display:flex;justify-content:space-between;align-items:center;padding-bottom:24px;border-bottom:1px solid var(--line)}.atelier-gapette h2{font-size:25px;letter-spacing:-1px;margin:0}.atelier-gapette .settings-heading>span{font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--ag-muted)}.atelier-gapette .setting-section{padding:24px 0;border-bottom:1px solid var(--line)}.atelier-gapette h3{font-size:16px;display:flex;align-items:center;gap:10px;margin:0 0 19px;font-weight:700}.atelier-gapette .step{font-size:12px;border:1px solid var(--ag-line-strong);border-radius:50%;width:25px;height:25px;display:grid;place-items:center;font-weight:500}.atelier-gapette h3 output{margin-left:auto;font-size:12px;font-weight:400;color:var(--ag-muted)}.atelier-gapette .patterns{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.atelier-gapette .pattern-button{background:#fff;border:1px solid var(--line);border-radius:7px;padding:5px 5px 7px;position:relative;min-width:0}.atelier-gapette .pattern-button canvas{width:100%;height:49px;display:block;border-radius:3px}.atelier-gapette .pattern-button span{display:block;margin-top:6px;font-size:12px}.atelier-gapette .pattern-button[aria-pressed=true]{border:2px solid var(--ink);padding:4px 4px 6px}.atelier-gapette .pattern-button[aria-pressed=true]:after{content:'✓';position:absolute;top:9px;right:9px;border-radius:50%;background:var(--lime);color:var(--ink);width:16px;height:16px;font-size:11px;display:grid;place-items:center}.atelier-gapette .palette-row{display:flex;align-items:center;justify-content:space-between;margin-top:18px;font-size:14px}.atelier-gapette .palettes{display:flex;gap:9px}.atelier-gapette .palette-button{width:27px;height:27px;border-radius:50%;border:3px solid white;outline:1px solid var(--line);padding:0}.atelier-gapette .palette-button[aria-pressed=true]{outline:2px solid var(--ink)}.atelier-gapette .field-label{display:flex;align-items:center;justify-content:space-between;font-size:13px;margin-bottom:8px;font-weight:500}.atelier-gapette .field-label span,.atelier-gapette .field-label output{font-size:12px;color:var(--ag-muted);font-weight:400}.atelier-gapette input[type=text],.atelier-gapette select{width:100%;height:43px;border:1px solid var(--ag-line-strong);border-radius:5px;color:var(--ink);background:#fff;padding:10px 12px}.atelier-gapette input[type=text]{font-size:15px}.atelier-gapette .field-help{font-size:11px;color:var(--ag-muted);margin:7px 0 16px}.atelier-gapette .placement{padding:0;border:0;margin:0 0 17px;min-width:0}.atelier-gapette .placement legend{font-size:13px;margin-bottom:8px}.atelier-gapette .segmented{display:flex;border:1px solid var(--line);background:var(--ag-fill);padding:4px;border-radius:6px}.atelier-gapette .segmented label{flex:1;position:relative;cursor:pointer}.atelier-gapette .segmented input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}.atelier-gapette .segmented span{font-size:13px;display:block;text-align:center;padding:9px 4px;border-radius:4px}.atelier-gapette .segmented input:checked+span{background:var(--ink);color:#fff}.atelier-gapette .segmented input:focus-visible+span{outline:3px solid var(--ag-focus);outline-offset:3px}.atelier-gapette .two-fields{display:grid;grid-template-columns:1.1fr 1fr;gap:12px}.atelier-gapette select{font-size:12px;padding:8px 6px}.atelier-gapette .color-picker{height:43px;border:1px solid var(--ag-line-strong);border-radius:5px;display:flex;gap:6px;align-items:center;padding:5px 7px;cursor:pointer}.atelier-gapette .color-picker input{width:26px;height:27px;padding:0;border:0;background:transparent;cursor:pointer}.atelier-gapette .color-picker span{font-size:11px;font-family:monospace}.atelier-gapette .size-label{margin-top:18px}.atelier-gapette input[type=range]{width:100%;accent-color:var(--ink);margin:1px 0 13px;cursor:pointer;height:17px}.atelier-gapette .outline-control{font-size:13px;display:flex;align-items:center;gap:7px;cursor:pointer}.atelier-gapette .outline-control input{accent-color:var(--ink);width:15px;height:15px;margin:0}.atelier-gapette .configuration-summary{display:flex;gap:14px;align-items:center;background:var(--lime);padding:13px 14px;border-radius:5px;margin-top:23px}.atelier-gapette .summary-icon{font-size:27px}.atelier-gapette .configuration-summary p{font-size:12px;line-height:1.7;margin:0}.atelier-gapette .preview-note{font-size:11px;line-height:1.6;color:var(--ag-muted);margin:13px 0 0}.atelier-gapette .pattern-button:hover,.atelier-gapette .palette-button:hover{filter:brightness(.96)}
+@container ag (min-width:1400px){.atelier-gapette .ag-main{grid-template-columns:minmax(0,1fr) 445px}.atelier-gapette .settings{padding:32px}.atelier-gapette .studio{min-height:830px}.atelier-gapette .ag-viewer{inset:110px 0 70px}.atelier-gapette .model-tag{top:auto;bottom:210px}.atelier-gapette .patterns canvas{height:56px}}
+@container ag (max-width:1050px){.atelier-gapette .ag-main{grid-template-columns:minmax(0,1fr) 360px}.atelier-gapette .settings{padding:25px 20px}.atelier-gapette .studio-title{left:7%}.atelier-gapette .model-tag{top:auto;bottom:188px}.atelier-gapette .model-tag strong{font-size:17px}.atelier-gapette .model-tag span:last-child{display:none}.atelier-gapette .view-controls button{padding:10px 16px}.atelier-gapette .studio-footer{font-size:11px}.atelier-gapette .rotation-hint{max-width:130px}}
+@container ag (max-width:760px){.atelier-gapette .ag-main{display:flex;flex-direction:column}.atelier-gapette .studio{min-height:490px;height:62svh;max-height:620px}.atelier-gapette .studio-title{top:25px;left:24px}.atelier-gapette .eyebrow{font-size:10px}.atelier-gapette .studio-title .ag-display{font-size:45px;margin:7px 0}.atelier-gapette .studio-title p{font-size:13px}.atelier-gapette .ag-viewer{inset:90px 0 47px}.atelier-gapette .model-tag{display:none}.atelier-gapette .background-word{bottom:97px;font-size:24vw;letter-spacing:-2px}.atelier-gapette .view-controls{bottom:53px}.atelier-gapette .studio-footer{bottom:12px;left:24px;right:24px}.atelier-gapette .rotation-hint{max-width:none;font-size:11px}.atelier-gapette .settings{border-left:0;border-top:1px solid var(--line);padding:25px 24px 27px}.atelier-gapette .settings-heading>span{font-size:11px}.atelier-gapette .patterns{gap:12px}.atelier-gapette .pattern-button canvas{height:65px}.atelier-gapette .pattern-button span,.atelier-gapette .configuration-summary p{font-size:13px}.atelier-gapette .field-label,.atelier-gapette .placement legend,.atelier-gapette .outline-control,.atelier-gapette .segmented span{font-size:14px}.atelier-gapette .field-help,.atelier-gapette .preview-note{font-size:12px}.atelier-gapette .color-picker span,.atelier-gapette select{font-size:13px}.atelier-gapette .settings-heading{padding-bottom:20px}.atelier-gapette .palette-button{width:30px;height:30px}.atelier-gapette .configuration-summary{padding:16px}.atelier-gapette .text-section{padding-bottom:22px}}
+@media(prefers-reduced-motion:reduce){.atelier-gapette, .atelier-gapette *{scroll-behavior:auto!important}}
+
+/* Comfortable control labels at all viewport sizes. */
+.atelier-gapette .pattern-button span,.atelier-gapette .field-label,.atelier-gapette .placement legend,.atelier-gapette .segmented span,.atelier-gapette .outline-control,.atelier-gapette select{font-size:14px}.atelier-gapette .field-help,.atelier-gapette .preview-note,.atelier-gapette .color-picker span,.atelier-gapette .settings-heading>span,.atelier-gapette .model-tag span:first-child,.atelier-gapette .rotation-hint,.atelier-gapette .text-button{font-size:12px}.atelier-gapette .studio-title p{font-size:16px}.atelier-gapette .configuration-summary p{font-size:14px}.atelier-gapette .settings-heading>span{letter-spacing:.8px}
+
+/* Keep the preview in sight as the configuration grows. */
+.atelier-gapette .studio{position:sticky;top:var(--ag-sticky-top,0px);align-self:start;width:100%;height:calc(100svh - var(--ag-sticky-top,0px));min-height:660px;max-height:1050px}
+.atelier-gapette .detail-toggle{position:absolute;top:184px;right:6%;z-index:3;display:flex;align-items:center;gap:12px;border:1px solid var(--ag-line-strong);border-radius:22px;background:#ffffffeb;padding:10px 15px;font-size:14px;box-shadow:0 3px 12px #14233c08}
+.atelier-gapette .detail-toggle[aria-pressed=true]{background:var(--lime);border-color:var(--lime)}
+.atelier-gapette .detail-mode .model-tag{visibility:hidden}.atelier-gapette .detail-mode .background-word{opacity:.2}
+.atelier-gapette .colors-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:18px 0 10px;font-size:14px}.atelier-gapette .colors-heading output{font-size:12px;color:var(--ag-muted);text-align:right}
+.atelier-gapette .color-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.atelier-gapette .surface-color{display:grid;grid-template-columns:minmax(0,1fr) 30px;gap:3px 8px;align-items:center;font-size:14px;border:1px solid var(--line);padding:9px 11px;border-radius:5px;cursor:pointer}.atelier-gapette .surface-color input{grid-column:2;grid-row:1/3;width:30px;height:32px;padding:0;border:0;background:transparent;cursor:pointer}.atelier-gapette .surface-color span{font-family:monospace;font-size:12px;color:var(--ag-muted)}.atelier-gapette .visor-position{margin-bottom:0}.atelier-gapette .visor-section .field-help{margin:10px 0 0}.atelier-gapette .visor-section{padding:21px 0}.atelier-gapette .visor-section h3{margin-bottom:15px}
+@container ag (max-width:1050px) and (min-width:761px){.atelier-gapette .detail-toggle{top:189px;left:7%;right:auto;font-size:13px}.atelier-gapette .colors-heading{align-items:start}.atelier-gapette .colors-heading output{max-width:125px}.atelier-gapette .surface-color{padding:8px}.atelier-gapette .studio-title p{max-width:240px}}
+@container ag (max-width:760px){.atelier-gapette .studio{z-index:4;height:clamp(245px,40svh,350px);min-height:245px;max-height:350px;box-shadow:0 4px 14px #14233c10}.atelier-gapette .studio-title{top:13px;left:20px}.atelier-gapette .eyebrow{display:none}.atelier-gapette .studio-title .ag-display{font-size:29px;margin:0}.atelier-gapette .studio-title p{display:none}.atelier-gapette .ag-viewer{inset:46px 0 42px}.atelier-gapette .detail-toggle{top:12px;right:18px;padding:8px 11px;font-size:12px}.atelier-gapette .background-word{bottom:61px}.atelier-gapette .view-controls{bottom:37px;padding:3px}.atelier-gapette .view-controls button{font-size:12px;padding:7px 16px}.atelier-gapette .studio-footer{left:20px;right:20px;bottom:5px}.atelier-gapette .studio-footer .text-button,.atelier-gapette .rotation-hint{font-size:11px}.atelier-gapette .settings input,.atelier-gapette .settings select{scroll-margin-top:calc(40svh + 20px)}.atelier-gapette .color-grid{gap:10px}.atelier-gapette .surface-color{padding:10px 12px}.atelier-gapette .surface-color input{width:30px;height:33px}}
+@container ag (max-width:360px){.atelier-gapette .studio-title .ag-display{font-size:25px}.atelier-gapette .detail-toggle{right:12px;font-size:11px;max-width:160px;padding:8px}.atelier-gapette .palette-row{gap:10px}.atelier-gapette .palette-row>span{font-size:13px}.atelier-gapette .palettes{gap:8px}.atelier-gapette .palette-button{width:26px;height:26px}}
+
+/* Fixed product photography: the textile is the focal point. */
+.atelier-gapette .studio{background:#fff}
+.atelier-gapette .ag-viewer{inset:190px 2% 145px;overflow:hidden;touch-action:pan-y;background:#fff}
+.atelier-gapette .ag-viewer canvas{position:absolute;max-width:none;cursor:default;transition:width .3s ease,height .3s ease,left .3s ease,top .3s ease}
+.atelier-gapette .ag-viewer canvas:active{cursor:default}
+.atelier-gapette .ag-viewer[aria-busy=true]:before{content:'Préparation de votre gapette…';position:absolute;inset:40% 10%;text-align:center;color:var(--ag-muted);font-size:14px}
+.atelier-gapette .ag-render-error{inset:30% 10%;z-index:2;background:white;text-align:center}
+.atelier-gapette .detail-toggle{top:135px}
+.atelier-gapette .model-tag{top:auto;bottom:84px;left:6%}
+.atelier-gapette .model-tag span:last-child{display:none}
+.atelier-gapette .view-controls{bottom:90px;left:auto;right:5%;transform:none;white-space:nowrap;border-color:var(--line);box-shadow:none}
+.atelier-gapette .view-controls button{padding:10px 15px;font-size:14px}
+.atelier-gapette .studio-footer{bottom:28px}
+.atelier-gapette .rotation-hint,.atelier-gapette .text-button{font-size:14px}
+.atelier-gapette .field-help,.atelier-gapette .preview-note{font-size:13px}
+@container ag (max-width:1050px) and (min-width:761px){
+  .atelier-gapette .detail-toggle{top:152px;left:7%}
+  .atelier-gapette .model-tag{display:none}
+  .atelier-gapette .view-controls{left:50%;right:auto;transform:translateX(-50%)}
+}
+@container ag (max-width:760px){
+  .atelier-gapette .studio{height:clamp(275px,43svh,390px);min-height:275px;max-height:390px}
+  .atelier-gapette .ag-viewer{inset:49px 0 49px}
+  .atelier-gapette .detail-toggle{top:12px;right:14px;font-size:12px}
+  .atelier-gapette .view-controls{left:50%;right:auto;bottom:10px;transform:translateX(-50%);padding:3px}
+  .atelier-gapette .view-controls button{padding:7px 16px;font-size:13px}
+  .atelier-gapette .studio-footer{display:none}
+  .atelier-gapette .settings input,.atelier-gapette .settings select{scroll-margin-top:calc(43svh + 20px)}
+}
+@media(prefers-reduced-motion:reduce){.atelier-gapette .ag-viewer canvas{transition:none}}
+
+/* Eight palettes remain visible without squeezing the color controls. */
+.atelier-gapette .palette-row{align-items:center;gap:16px}
+.atelier-gapette .palettes{display:grid;grid-template-columns:repeat(4,30px);gap:9px;flex-shrink:0}
+.atelier-gapette .palette-button{width:30px;height:30px}
+@container ag (max-width:360px){.atelier-gapette .palettes{grid-template-columns:repeat(4,26px);gap:8px}.atelier-gapette .palette-button{width:26px;height:26px}}
+
+.atelier-gapette .image-import,.atelier-gapette .text-position{margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.atelier-gapette .image-import input[type=file]{width:100%;font-size:13px;color:var(--ag-muted)}
+.atelier-gapette .image-import input[type=file]::file-selector-button,.atelier-gapette .image-actions button{border:1px solid var(--ag-line-strong);background:white;color:var(--ink);border-radius:5px;padding:10px 12px;font:inherit;cursor:pointer}
+.atelier-gapette .image-import input[type=file]::file-selector-button{margin-right:9px}
+.atelier-gapette .image-actions{display:flex;flex-wrap:wrap;gap:8px;font-size:14px}
+.atelier-gapette .image-actions button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.atelier-gapette .image-actions button:disabled{cursor:default;opacity:.45}
+.atelier-gapette .ag-image-status:empty{display:none}
+.atelier-gapette .ag-image-status[data-error=true]{color:#9f2637}
+.atelier-gapette .ag-viewer.moving-text{touch-action:none}
+.atelier-gapette .ag-viewer.moving-text canvas{cursor:move;touch-action:none;transition:none}
+.atelier-gapette .ag-viewer.moving-text:after{content:'Faites glisser le texte · Flèches pour ajuster';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);white-space:nowrap;background:var(--ink);color:#fff;padding:8px 12px;border-radius:20px;font-size:12px;pointer-events:none}
+
+.atelier-gapette .ag-image-status{overflow-wrap:anywhere}
+
+/* Theme isolation: neutralise common theme styles on our controls. */
+.atelier-gapette .ag-main button,.atelier-gapette .ag-main input,.atelier-gapette .ag-main select,.atelier-gapette .ag-main textarea{text-transform:none;letter-spacing:normal;min-height:0;line-height:normal;margin:0;color:inherit;font-family:inherit}
+.atelier-gapette .ag-main button{text-decoration:none;font-weight:inherit;width:auto}
+.atelier-gapette .ag-main h2,.atelier-gapette .ag-main h3,.atelier-gapette .ag-main p{text-transform:none;color:inherit}
+.atelier-gapette .ag-main .view-controls button.active,.atelier-gapette .ag-main .image-actions button[aria-pressed=true]{color:#fff}
+.atelier-gapette .ag-main .font-button .font-sample{color:var(--ink)}
+.atelier-gapette .ag-main .ag-direct-button[aria-pressed=true],.atelier-gapette .ag-main .ag-toast{color:#fff}
+.atelier-gapette .ag-main .ag-tb-group button[aria-pressed=true],.atelier-gapette .ag-main .ag-text-toolbar .ag-tb-done,.atelier-gapette .ag-main .ag-edit-badge{color:#fff}
+.atelier-gapette .ag-main .ag-handle{color:var(--ink)}
+.atelier-gapette textarea{width:100%;min-height:120px;border:1px solid var(--ag-line-strong);border-radius:5px;padding:8px;font:12px/1.4 monospace;color:var(--ink);background:#fff}
+.atelier-gapette .ag-text-error{color:#9f2637;font-size:13px;margin:-8px 0 14px}
+.atelier-gapette .ag-config{margin-top:18px;font-size:13px}.atelier-gapette .ag-config summary{cursor:pointer;color:var(--ag-muted)}.atelier-gapette .ag-config .image-actions{margin:10px 0}
+.atelier-gapette .ag-config [data-error=true]{color:#9f2637}
+.atelier-gapette .ag-order{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.atelier-gapette .ag-order-row{display:flex;gap:10px;align-items:stretch}
+.atelier-gapette .ag-order .quantity input{width:70px;height:48px;border:1px solid var(--ag-line-strong);border-radius:5px;padding:0 8px;font-size:15px}
+.atelier-gapette .ag-order .ag-order-button{flex:1;height:48px;border:0;border-radius:5px;background:var(--ink);color:#fff;font-size:15px;font-weight:700}
+.atelier-gapette .ag-order .ag-order-button:hover{filter:brightness(1.15)}
+.atelier-gapette .ag-order-status{font-size:13px;margin:10px 0 0}.atelier-gapette .ag-order-status:empty{display:none}.atelier-gapette .ag-order-status[data-error=true]{color:#9f2637}
+.atelier-gapette .ag-price{font-size:14px;margin:0 0 10px;color:var(--ag-muted)}
+.atelier-gapette .screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-wrap:normal}
+.atelier-gapette .fonts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:18px}
+.atelier-gapette .font-button{background:#fff;border:1px solid var(--line);border-radius:7px;padding:9px 6px 7px;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+.atelier-gapette .font-button .font-sample{font-size:21px;line-height:1.25;white-space:nowrap;overflow:hidden;max-width:100%;color:var(--ink)}
+.atelier-gapette .font-button .font-label{font-size:11px;color:var(--ag-muted)}
+.atelier-gapette .font-button[aria-pressed=true]{border:2px solid var(--ink);padding:8px 5px 6px}
+.atelier-gapette .font-button:hover{filter:brightness(.96)}
+.atelier-gapette .ag-field-group{margin-bottom:6px}
+.atelier-gapette .ag-shape{margin-top:14px}
+.atelier-gapette .ag-shapes{margin-bottom:14px}.atelier-gapette .ag-shapes button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
+.atelier-gapette .ag-shape-icon{font-size:16px;line-height:1;opacity:.8}
+.atelier-gapette .ag-fit-note{margin:-6px 0 12px;color:#7a5b12}
+/* v0.5 — direct text editing on the preview */
+.atelier-gapette .ag-viewer.moving-text:after{display:none}
+.atelier-gapette .ag-edit-layer{position:absolute;inset:0;pointer-events:none;z-index:2}
+.atelier-gapette .ag-edit-layer .ag-frame{position:absolute;left:0;top:0;overflow:visible}
+.atelier-gapette .ag-edit-layer .ag-frame polygon{fill:none;stroke:#fff;stroke-width:2;stroke-dasharray:7 5;filter:drop-shadow(0 0 2px var(--ink))}
+.atelier-gapette .ag-edit-layer .ag-frame line{stroke:#fff;stroke-width:1.5;filter:drop-shadow(0 0 2px var(--ink))}
+.atelier-gapette .ag-edit-layer button{pointer-events:auto;position:absolute}
+.atelier-gapette .ag-edit-layer [hidden],.atelier-gapette .ag-edit-layer[hidden]{display:none!important}
+.atelier-gapette .ag-main .ag-edit-badge{display:flex;align-items:center;gap:5px;border:1px solid #fff;background:#14233ce6;color:#fff;border-radius:16px;padding:6px 11px;font-size:13px;line-height:1;box-shadow:0 2px 10px #14233c30;white-space:nowrap}
+.atelier-gapette .ag-edit-badge:hover{background:var(--ink)}
+.atelier-gapette .ag-main .ag-handle{width:36px;height:36px;border-radius:50%;border:2px solid var(--ink);background:#fff;color:var(--ink);display:grid;place-items:center;font-size:17px;line-height:1;padding:0;box-shadow:0 2px 8px #14233c40;touch-action:none}
+.atelier-gapette .ag-main .ag-handle-rotate{cursor:grab}.atelier-gapette .ag-handle-rotate.dragging{cursor:grabbing}
+.atelier-gapette .ag-main .ag-handle-size{cursor:nwse-resize}
+.atelier-gapette .ag-handle.dragging,.atelier-gapette .ag-handle:hover{background:var(--lime)}
+.atelier-gapette .ag-handle:focus-visible,.atelier-gapette .ag-edit-badge:focus-visible{outline:3px solid var(--ag-focus);outline-offset:2px}
+.atelier-gapette .ag-text-toolbar{position:absolute;z-index:6;display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px;box-shadow:0 8px 28px #14233c26;max-width:calc(100% - 16px)}
+.atelier-gapette .ag-text-toolbar[hidden]{display:none}
+.atelier-gapette .ag-text-toolbar:focus{outline:none}
+.atelier-gapette .ag-text-toolbar:focus-visible{outline:3px solid var(--ag-focus);outline-offset:2px}
+.atelier-gapette .ag-tb-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.atelier-gapette .ag-text-toolbar input.ag-tb-text{height:36px;min-width:0;flex:1 1 150px;font-size:14px;padding:6px 9px;border:1px solid var(--ag-line-strong);border-radius:5px;width:auto}
+.atelier-gapette .ag-text-toolbar select.ag-tb-font{height:36px;width:auto;flex:0 1 130px;font-size:13px;padding:4px 6px}
+.atelier-gapette .ag-tb-group{display:flex;align-items:center;border:1px solid var(--line);border-radius:6px;background:var(--ag-fill);padding:2px}
+.atelier-gapette .ag-tb-group button,.atelier-gapette .ag-tb-icon{border:0;background:transparent;border-radius:4px;min-width:32px;height:32px;padding:0 7px;font-size:15px;color:var(--ink)}
+.atelier-gapette .ag-tb-icon{border:1px solid var(--line);background:var(--ag-fill);border-radius:6px;height:38px}
+.atelier-gapette .ag-tb-group button:hover,.atelier-gapette .ag-tb-icon:hover{background:var(--ag-fill-2)}
+.atelier-gapette .ag-tb-group button[aria-pressed=true]{background:var(--ink);color:#fff}
+.atelier-gapette .ag-tb-group output{min-width:44px;text-align:center;font-size:12px;font-variant-numeric:tabular-nums;color:var(--ag-muted)}
+.atelier-gapette .ag-text-toolbar .ag-tb-done{margin-left:auto;height:38px;border:0;border-radius:6px;background:var(--ink);color:#fff;padding:0 16px;font-weight:700;font-size:14px}
+.atelier-gapette .ag-text-toolbar.ag-docked{left:8px;right:8px;bottom:8px;top:auto;max-width:none}
+.atelier-gapette .ag-text-toolbar.ag-docked{padding:6px;gap:5px}
+.atelier-gapette .ag-text-toolbar.ag-docked .ag-tb-row{flex-wrap:nowrap;gap:5px}
+.atelier-gapette .ag-text-toolbar.ag-docked .ag-tb-group output{display:none}
+.atelier-gapette .ag-text-toolbar.ag-docked .ag-tb-group button{min-width:30px;padding:0 5px}
+.atelier-gapette .ag-text-toolbar.ag-docked .ag-tb-icon{min-width:34px;padding:0 6px}
+.atelier-gapette .ag-text-toolbar.ag-docked .ag-tb-done{padding:0 12px}
+@container ag (max-width:760px){.atelier-gapette .ag-main .ag-edit-badge{font-size:12px;padding:5px 9px}.atelier-gapette .ag-main .ag-handle{width:40px;height:40px}}
+/* v0.7 — lighter studio, colour names, undo, add-to-cart feedback */
+.atelier-gapette{background:transparent}
+.atelier-gapette .studio{background:#fff}
+.atelier-gapette .ag-viewer{inset:70px 2% 18px}
+.atelier-gapette .ag-studio-bar{position:absolute;top:16px;z-index:5;display:flex;align-items:center;gap:8px}
+.atelier-gapette .ag-studio-bar-left{left:16px}
+.atelier-gapette .ag-studio-bar-right{right:16px}
+.atelier-gapette .ag-studio-bar .view-controls{position:static;transform:none;margin:0;bottom:auto;left:auto;right:auto;padding:3px;border:1px solid var(--line);background:#fff;box-shadow:none}
+.atelier-gapette .ag-studio-bar .view-controls button{padding:8px 14px;font-size:13px}
+.atelier-gapette .ag-studio-bar .detail-toggle{position:static;top:auto;right:auto;left:auto}
+.atelier-gapette .ag-main .ag-chip{display:inline-flex;align-items:center;gap:6px;height:38px;border:1px solid var(--line);border-radius:19px;background:#fff;padding:0 14px;font-size:13px;color:var(--ink)}
+.atelier-gapette .ag-main .ag-chip-icon{width:38px;padding:0;justify-content:center;font-size:16px}
+.atelier-gapette .ag-chip:hover:not(:disabled){background:var(--ag-fill)}
+.atelier-gapette .ag-chip:disabled{opacity:.4;cursor:default}
+.atelier-gapette .ag-toast{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:7;background:var(--ink);color:#fff;border-radius:22px;padding:11px 18px;font-size:14px;box-shadow:0 8px 24px #14233c40;max-width:calc(100% - 32px);text-align:center}
+.atelier-gapette .ag-toast[hidden]{display:none}
+.atelier-gapette .ag-toast a{color:var(--lime);font-weight:700;margin-left:4px}
+.atelier-gapette .ag-toast[data-kind=error]{background:#9f2637}
+.atelier-gapette .settings-heading .ag-reset-all{font-size:13px;text-decoration:underline;text-underline-offset:3px;color:var(--ag-muted)}
+/* file picker in French */
+.atelier-gapette .ag-file{position:relative;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.atelier-gapette .ag-file-input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+.atelier-gapette .ag-file-button{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ag-line-strong);border-radius:5px;padding:10px 14px;font-size:14px;cursor:pointer;background:#fff}
+.atelier-gapette .ag-file-button:hover{background:var(--ag-fill)}
+.atelier-gapette .ag-file-input:focus-visible+.ag-file-button{outline:3px solid var(--ag-focus);outline-offset:3px}
+.atelier-gapette .ag-file-name{font-size:13px;color:var(--ag-muted);overflow-wrap:anywhere}
+.atelier-gapette .image-import .field-label{margin-bottom:10px}
+/* surface colours: names, no hex */
+.atelier-gapette .surface-color{grid-template-columns:minmax(0,1fr) 32px;padding:9px 11px}
+.atelier-gapette .surface-color .ag-surface-label{font-family:inherit;font-size:12px;color:var(--ag-muted);grid-column:1;grid-row:1}
+.atelier-gapette .surface-color .ag-surface-name{font-family:inherit;font-size:14px;color:var(--ink);grid-column:1;grid-row:2}
+/* text colour swatches */
+.atelier-gapette .ag-swatches{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.atelier-gapette .ag-main .ag-swatch{width:30px;height:30px;border-radius:50%;border:3px solid #fff;outline:1px solid var(--line);padding:0}
+.atelier-gapette .ag-swatch[aria-pressed=true]{outline:2px solid var(--ink)}
+.atelier-gapette .ag-color-extra{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.atelier-gapette .ag-swatch-other{display:inline-flex;align-items:center;gap:8px;font-size:13px;cursor:pointer}
+.atelier-gapette .ag-swatch-other input{width:30px;height:30px;padding:0;border:0;border-radius:50%;background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red);cursor:pointer}
+.atelier-gapette .ag-swatch-other input::-webkit-color-swatch-wrapper{padding:3px}
+.atelier-gapette .ag-swatch-other input::-webkit-color-swatch{border:0;border-radius:50%}
+.atelier-gapette .ag-swatch-other input::-moz-color-swatch{border:0;border-radius:50%}
+/* direct editing entry + fine settings */
+.atelier-gapette .ag-direct{display:flex;align-items:center;gap:12px;margin:4px 0 12px}
+.atelier-gapette .ag-direct .field-help{margin:0}
+.atelier-gapette .ag-main .ag-direct-button{flex-shrink:0;border:1px solid var(--ink);border-radius:5px;background:#fff;padding:10px 14px;font-size:14px;font-weight:600}
+.atelier-gapette .ag-direct-button[aria-pressed=true]{background:var(--ink);color:#fff}
+.atelier-gapette .ag-fine{border:1px solid var(--line);border-radius:6px;padding:0 12px;margin-top:6px}
+.atelier-gapette .ag-fine summary{cursor:pointer;padding:11px 0;font-size:14px;font-weight:500;list-style-position:inside}
+.atelier-gapette .ag-fine[open]{padding-bottom:10px}
+.atelier-gapette .ag-fine[open] summary{margin-bottom:8px;border-bottom:1px solid var(--line)}
+@container ag (max-width:760px){
+  .atelier-gapette .ag-viewer{inset:56px 0 8px}
+  .atelier-gapette .ag-studio-bar{top:10px;gap:6px}
+  .atelier-gapette .ag-studio-bar-left{left:10px}.atelier-gapette .ag-studio-bar-right{right:10px}
+  .atelier-gapette .ag-main .ag-chip{height:34px;padding:0 11px;font-size:12px}.atelier-gapette .ag-main .ag-chip-icon{width:34px;padding:0}
+  .atelier-gapette .ag-studio-bar .view-controls button{padding:6px 10px;font-size:12px}
+  .atelier-gapette .ag-studio-bar .detail-toggle{display:none}
+  .atelier-gapette .ag-toast{bottom:10px;font-size:13px}
+}
+@container ag (max-width:430px){
+  .atelier-gapette .ag-main .ag-chip[data-ag=undo]{width:34px;padding:0;justify-content:center;font-size:0}
+  .atelier-gapette .ag-main .ag-chip[data-ag=undo] span{font-size:16px}
+}
+
+/* 0.7.1 — classic themes float the product gallery and summary: the root is a
+   size container (its own formatting context), so without a clear it squeezes
+   into the gap between the two floats. Also resist theme .alignwide{width:auto}. */
+.atelier-gapette.atelier-gapette[data-ag-root]{clear:both;float:none;box-sizing:border-box}
+.atelier-gapette.atelier-gapette[data-ag-root]:not(.alignwide){width:100%;max-width:none;margin-left:0;margin-right:0}
+
+/* 0.8.0 — solid model: one plain cap, a few catalogue colours, a text. */
+.atelier-gapette .ag-main .ag-pattern-section[hidden],.atelier-gapette .ag-main .ag-config[hidden]{display:none!important}
+.atelier-gapette .ag-main .ag-cap-colors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.atelier-gapette .ag-main .ag-cap-color{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font:500 15px/1.2 var(--ag-font);text-align:left;cursor:pointer}
+.atelier-gapette .ag-main .ag-cap-color:hover{border-color:var(--ag-line-hover)}
+.atelier-gapette .ag-main .ag-cap-color[aria-pressed=true]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.atelier-gapette .ag-main .ag-cap-color:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.atelier-gapette .ag-main .ag-cap-dot{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid #00000026;box-shadow:inset 0 0 0 2px #ffffff40}
+
+/* 0.9.0 — several texts */
+.atelier-gapette .ag-main .ag-text-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.atelier-gapette .ag-main .ag-text-tab{display:inline-flex;align-items:center;gap:8px;max-width:100%;min-height:40px;padding:6px 12px 6px 6px;border:1px solid var(--line);border-radius:20px;background:#fff;color:var(--ink);font:500 14px/1.2 var(--ag-font);cursor:pointer}
+.atelier-gapette .ag-main .ag-text-tab:hover{border-color:var(--ag-line-hover)}
+.atelier-gapette .ag-main .ag-text-tab[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.atelier-gapette .ag-main .ag-text-tab:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.atelier-gapette .ag-main .ag-text-tab-n{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ag-fill);color:var(--ink);font-size:12px;font-weight:600}
+.atelier-gapette .ag-main .ag-text-tab-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px}
+.atelier-gapette .ag-main .ag-text-add{padding:6px 14px;border-style:dashed;color:var(--ag-muted)}
+.atelier-gapette .ag-main .ag-remove-text{display:block;margin-top:14px;color:#a12a2a}
+.atelier-gapette .ag-main .ag-remove-text[hidden]{display:none}
+
+/* 0.9.0 — dedicated product page: purchase block at the end of the settings */
+.atelier-gapette .ag-main .ag-buy{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.atelier-gapette .ag-main .ag-buy[hidden]{display:none}
+.atelier-gapette .ag-main .ag-buy .price{display:block;margin:0 0 14px;font:600 26px/1.2 var(--ag-font);color:var(--ink)}
+.atelier-gapette .ag-main .ag-buy .price del{font-weight:400;font-size:18px;opacity:.6;margin-right:8px}
+.atelier-gapette .ag-main .ag-buy .price ins{text-decoration:none}
+.atelier-gapette .ag-main .ag-buy form.cart{display:block;margin:0;padding:0;border:0}
+.atelier-gapette .ag-main .ag-buy form.cart.ag-hide-variations table.variations,.atelier-gapette .ag-main .ag-buy form.cart.ag-hide-variations .reset_variations{display:none!important}
+.atelier-gapette .ag-main .ag-buy table.variations{width:100%;margin:0 0 12px;border:0}
+.atelier-gapette .ag-main .ag-buy table.variations th,.atelier-gapette .ag-main .ag-buy table.variations td{display:block;padding:0 0 6px;border:0;text-align:left;background:none}
+.atelier-gapette .ag-main .ag-buy table.variations select{width:100%;height:46px;border:1px solid var(--ag-line-strong);border-radius:5px;padding:0 10px;font-size:15px;background:#fff;color:var(--ink)}
+.atelier-gapette .ag-main .ag-buy .woocommerce-variation-price .price{font-size:22px;margin-bottom:10px}
+.atelier-gapette .ag-main .ag-buy .woocommerce-variation-availability,.atelier-gapette .ag-main .ag-buy .stock{font-size:13px;margin:0 0 10px;color:var(--ag-muted)}
+.atelier-gapette .ag-main .ag-buy .woocommerce-variation-add-to-cart,.atelier-gapette .ag-main .ag-buy form.cart:not(.variations_form){display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
+.atelier-gapette .ag-main .ag-buy .quantity{flex:none;margin:0}
+.atelier-gapette .ag-main .ag-buy .quantity input.qty{width:74px;height:52px;border:1px solid var(--ag-line-strong);border-radius:5px;padding:0 8px;font-size:16px;text-align:center;background:#fff;color:var(--ink)}
+.atelier-gapette .ag-main .ag-buy button.single_add_to_cart_button{flex:1;min-width:180px;height:52px;margin:0;padding:0 18px;border:0;border-radius:5px;background:var(--ink);color:#fff;font:700 16px/1 var(--ag-font);text-transform:none;letter-spacing:0;cursor:pointer;opacity:1}
+.atelier-gapette .ag-main .ag-buy button.single_add_to_cart_button:hover{filter:brightness(1.2)}
+.atelier-gapette .ag-main .ag-buy button.single_add_to_cart_button.disabled,.atelier-gapette .ag-main .ag-buy button.single_add_to_cart_button:disabled{opacity:.45;cursor:not-allowed}
+.atelier-gapette.atelier-gapette[data-ag-root].ag-bleed{max-width:none}
+
+/* 0.9.1 — site skin: the configurator takes the shop's colours, fonts and shapes.
+   Every value is a custom property on .atelier-gapette (see the first rule). */
+.atelier-gapette .settings{background:transparent;border-left:0}
+.atelier-gapette .ag-main h2{font:700 28px/1.15 var(--ag-font);letter-spacing:0;color:var(--ink)}
+.atelier-gapette .ag-main h3{font:700 16px/1.2 var(--ag-font-head);text-transform:uppercase;letter-spacing:.04em;color:var(--ink)}
+.atelier-gapette .ag-main h3 output{font-family:var(--ag-font);text-transform:none;letter-spacing:0;font-size:13px}
+.atelier-gapette .ag-main .step{border:0;background:var(--ag-accent);color:var(--ink);font:700 12px/1 var(--ag-font-head);letter-spacing:0}
+.atelier-gapette .settings-heading .ag-reset-all:hover,.atelier-gapette .ag-main .text-button:hover{color:var(--ag-accent)}
+/* shapes: the site is square-cornered */
+.atelier-gapette .ag-main .ag-chip,.atelier-gapette .ag-studio-bar .view-controls,.atelier-gapette .ag-studio-bar .view-controls button,.atelier-gapette .ag-main .detail-toggle,.atelier-gapette .ag-main .ag-text-tab,.atelier-gapette .ag-main .ag-cap-color,.atelier-gapette .ag-toast,.atelier-gapette .ag-main .ag-edit-badge,.atelier-gapette .pattern-button,.atelier-gapette .font-button,.atelier-gapette .ag-text-toolbar,.atelier-gapette .configuration-summary,.atelier-gapette .ag-fine,.atelier-gapette .segmented,.atelier-gapette .segmented span{border-radius:var(--ag-radius)}
+.atelier-gapette .ag-studio-bar .view-controls{padding:3px;border-color:var(--line)}
+.atelier-gapette .ag-studio-bar .view-controls button,.atelier-gapette .ag-main .ag-chip{font-family:var(--ag-font-head);font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:12.5px}
+.atelier-gapette .ag-main .detail-toggle[aria-pressed=true]{background:var(--ag-accent-2);border-color:var(--ag-accent-2);color:var(--ink)}
+/* choices: orange marks the selection, navy fills the toggles */
+.atelier-gapette .ag-main .ag-cap-color[aria-pressed=true],.atelier-gapette .ag-main .font-button[aria-pressed=true],.atelier-gapette .ag-main .pattern-button[aria-pressed=true]{border-color:var(--ag-accent);box-shadow:0 0 0 1px var(--ag-accent);background:#fff}
+.atelier-gapette .ag-main .font-button[aria-pressed=true]{border-width:1px;padding:9px 6px 7px}
+.atelier-gapette .ag-main .ag-cap-color:focus-visible,.atelier-gapette .ag-main .ag-text-tab:focus-visible{outline:3px solid var(--ag-focus);outline-offset:2px}
+.atelier-gapette .ag-main .ag-swatch[aria-pressed=true],.atelier-gapette .ag-main .palette-button[aria-pressed=true]{outline:2px solid var(--ag-accent);outline-offset:1px}
+.atelier-gapette .ag-main .ag-text-tab-n{background:var(--ag-fill);font-family:var(--ag-font-head)}
+.atelier-gapette .ag-main .ag-text-tab[aria-pressed=true] .ag-text-tab-n{background:var(--ag-accent);color:var(--ink)}
+.atelier-gapette .ag-main .ag-text-add{background:transparent}
+.atelier-gapette .ag-main input[type=range],.atelier-gapette .ag-main .outline-control input{accent-color:var(--ag-accent)}
+.atelier-gapette .ag-main input[type=text]:focus,.atelier-gapette .ag-main select:focus{border-color:var(--ag-accent);outline:2px solid var(--ag-accent);outline-offset:0}
+.atelier-gapette .ag-main .ag-fine{background:#fff}
+.atelier-gapette .ag-main .ag-handle.dragging,.atelier-gapette .ag-main .ag-handle:hover{background:var(--ag-accent-2)}
+/* summary + purchase */
+.atelier-gapette .ag-main .configuration-summary{background:var(--ag-soft);border:1px solid var(--line)}
+.atelier-gapette .ag-main .summary-icon{color:var(--ag-accent)}
+.atelier-gapette .ag-main .ag-buy .price,.atelier-gapette .ag-main .ag-price{font:700 30px/1.2 var(--ag-font);color:var(--ink)}
+.atelier-gapette .ag-main .ag-buy button.single_add_to_cart_button,.atelier-gapette .ag-main .ag-order .ag-order-button,.atelier-gapette .ag-main .ag-text-toolbar .ag-tb-done{background:var(--ag-accent);color:var(--ink);font:700 16px/1 var(--ag-font-head);text-transform:uppercase;letter-spacing:.04em;border-radius:var(--ag-radius)}
+.atelier-gapette .ag-main .ag-text-toolbar .ag-tb-done{font-size:14px}
+.atelier-gapette .ag-main .ag-buy button.single_add_to_cart_button:hover,.atelier-gapette .ag-main .ag-order .ag-order-button:hover,.atelier-gapette .ag-main .ag-text-toolbar .ag-tb-done:hover{background:var(--ag-accent-2);filter:none}
+.atelier-gapette .ag-main .ag-direct-button{border-color:var(--ink);border-radius:var(--ag-radius)}
+.atelier-gapette .ag-main .ag-toast a{color:var(--ag-accent-2)}
+@container ag (max-width:760px){.atelier-gapette .settings{border-top:0}.atelier-gapette .ag-main h2{font-size:24px}}
+
+/* 0.9.2 — step numbers without a colour fill, plain "Réglages précis", summary title */
+.atelier-gapette .ag-main .step{background:transparent;border:1px solid var(--ag-line-strong);color:var(--ink)}
+.atelier-gapette .ag-main .ag-fine{background:transparent;border:0;border-radius:0;padding:0;margin-top:10px}
+.atelier-gapette .ag-main .ag-fine summary{display:inline-block;padding:4px 0;font-size:14px;font-weight:400;color:var(--ag-muted);text-decoration:underline;text-underline-offset:3px;list-style:none;cursor:pointer}
+.atelier-gapette .ag-main .ag-fine summary::-webkit-details-marker{display:none}
+.atelier-gapette .ag-main .ag-fine summary::after{content:' +'}
+.atelier-gapette .ag-main .ag-fine[open] summary::after{content:' −'}
+.atelier-gapette .ag-main .ag-fine summary:hover{color:var(--ag-accent)}
+.atelier-gapette .ag-main .ag-fine[open]{padding-bottom:4px}
+.atelier-gapette .ag-main .ag-fine[open] summary{margin-bottom:12px;border-bottom:0}
+.atelier-gapette .ag-main .configuration-summary{align-items:flex-start}
+.atelier-gapette .ag-main .ag-summary-body{min-width:0}
+.atelier-gapette .ag-main .configuration-summary .ag-summary-title{margin:0 0 4px;font:700 13px/1.3 var(--ag-font-head);text-transform:uppercase;letter-spacing:.04em;color:var(--ink)}
+
+/* 0.9.3 — delete links, total price in the button, summary under the purchase block */
+.atelier-gapette .ag-main .ag-text-tab-wrap{display:inline-flex;align-items:stretch;max-width:100%}
+.atelier-gapette .ag-main .ag-text-tab-wrap .ag-text-tab{border-top-right-radius:0;border-bottom-right-radius:0;border-right:0;min-width:0}
+.atelier-gapette .ag-main .ag-text-tab-x{display:grid;place-items:center;width:34px;padding:0;border:1px solid var(--line);border-left:0;border-radius:0 var(--ag-radius) var(--ag-radius) 0;background:#fff;color:var(--ag-muted);font-size:20px;line-height:1;cursor:pointer}
+.atelier-gapette .ag-main .ag-text-tab-wrap[data-active=true] .ag-text-tab-x{background:var(--ink);border-color:var(--ink);color:#fff}
+.atelier-gapette .ag-main .ag-text-tab-x:hover,.atelier-gapette .ag-main .ag-text-tab-wrap[data-active=true] .ag-text-tab-x:hover{background:#9f2637;border-color:#9f2637;color:#fff}
+.atelier-gapette .ag-main .ag-text-tab-x:focus-visible{outline:3px solid var(--ag-focus);outline-offset:2px}
+.atelier-gapette .ag-main .ag-remove-text{display:block;margin:-8px 0 14px auto;padding:2px 0;font-size:13px;color:#9f2637;text-decoration:underline;text-underline-offset:3px}
+.atelier-gapette .ag-main .ag-remove-text:hover{color:#9f2637;text-decoration-thickness:2px}
+.atelier-gapette .ag-main .ag-text-toolbar .ag-tb-delete{color:#9f2637}
+.atelier-gapette .ag-main .ag-text-toolbar .ag-tb-delete:hover{background:#9f2637;color:#fff;border-color:#9f2637}
+.atelier-gapette.ag-price-in-cta .ag-main .ag-buy>.price,.atelier-gapette.ag-price-in-cta .ag-main .ag-order .ag-price{display:none}
+.atelier-gapette .ag-main .ag-buy button.single_add_to_cart_button,.atelier-gapette .ag-main .ag-order .ag-order-button{font-variant-numeric:tabular-nums;white-space:nowrap}
+.atelier-gapette .ag-main .ag-buy{border-top:0;padding-top:4px}
+.atelier-gapette .ag-main .ag-order{border-top:0;padding-top:4px}
+.atelier-gapette .ag-main .configuration-summary{margin-top:18px}
+
+/* 0.9.8 — design system La Gapette (v2.1) : chaque valeur vient des tokens du site
+   (extension « La Gapette – Design System »), avec repli chiffré quand elle n'est pas active.
+   Rappels : coins arrondis = cliquable ; texte sur orange = --on-orange ; sélection = bordure orange. */
+.atelier-gapette{--ink:var(--marine-900,#14233c);--ag-ink-2:var(--marine-700,#3b4a66);--ag-accent:var(--orange-500,#f49511);--ag-accent-text:var(--orange-600,#9e4d00);--ag-accent-2:var(--jaune-400,#fac811);--ag-on-accent:var(--on-orange,#14233c);--ag-soft:var(--peche-100,#fbecd6);--ag-fill:var(--coton-100,#f4eee1);--ag-fill-2:var(--coton-200,#ebe3d1);--ag-field:var(--coton-50,#fbf8f1);--line:var(--coton-300,#cfc4ad);--ag-line-strong:var(--marine-500,#56617a);--ag-line-hover:var(--marine-500,#56617a);--ag-muted:var(--marine-500,#56617a);--ag-focus:var(--focus,#14233c);--ag-alert:var(--alerte-600,#a4281c);--ag-ok:var(--ok-600,#2c6a38);--ag-radius:var(--radius-md,8px);--ag-radius-sm:var(--radius-sm,4px);--ag-font:var(--font-texte,Barlow,'Helvetica Neue',Arial,sans-serif);--ag-font-head:var(--font-texte,Barlow,'Helvetica Neue',Arial,sans-serif);--ag-font-dossard:var(--font-dossard,'Barlow Condensed','AG Barlow Condensed','Arial Narrow',sans-serif);--ag-font-affiche:var(--font-affiche,'Bricolage Grotesque','Archivo Black',Impact,sans-serif);--lime:var(--ag-accent-2);font-size:16px;line-height:1.55}
+.atelier-gapette button:focus-visible,.atelier-gapette a:focus-visible,.atelier-gapette input:focus-visible,.atelier-gapette select:focus-visible,.atelier-gapette summary:focus-visible,.atelier-gapette .ag-viewer:focus-visible,.atelier-gapette .ag-main .ag-cap-color:focus-visible,.atelier-gapette .ag-main .ag-text-tab:focus-visible,.atelier-gapette .ag-main .ag-text-tab-x:focus-visible,.atelier-gapette .ag-handle:focus-visible,.atelier-gapette .ag-edit-badge:focus-visible,.atelier-gapette .ag-text-toolbar:focus-visible,.atelier-gapette .segmented input:focus-visible+span,.atelier-gapette .ag-file-input:focus-visible+.ag-file-button{outline:2px solid var(--ag-focus);outline-offset:2px}
+
+/* colonne « Personnaliser » : panneau relevé (coton-200) */
+.atelier-gapette .settings{background:var(--ag-fill-2);border-left:0}
+.atelier-gapette .settings-heading,.atelier-gapette .setting-section{border-color:var(--line)}
+.atelier-gapette .ag-main h2{font:800 44px/1 var(--ag-font-affiche);letter-spacing:-.015em;color:var(--ink)}
+.atelier-gapette .settings-heading .ag-reset-all,.atelier-gapette .ag-main .text-button{font:600 14px/1.2 var(--ag-font);color:var(--ag-accent-text);text-decoration:none;background:linear-gradient(var(--ag-accent-text),var(--ag-accent-text)) 0 100%/0 2px no-repeat;padding:2px 0 4px;transition:background-size .28s cubic-bezier(.2,.8,.2,1)}
+.atelier-gapette .settings-heading .ag-reset-all:hover,.atelier-gapette .ag-main .text-button:hover{color:var(--ag-accent-text);background-size:100% 2px}
+
+/* StepHeader : pastille carrée jaune, titre Barlow 700 capitales, valeur à droite */
+.atelier-gapette .ag-main h3{font:700 16px/1.2 var(--ag-font);text-transform:uppercase;letter-spacing:.04em;color:var(--ink);gap:12px}
+.atelier-gapette .ag-main .step{width:28px;height:28px;border:0;border-radius:0;background:var(--ag-accent-2);color:var(--ag-on-accent);font:700 14px/1 var(--ag-font-dossard);letter-spacing:.04em}
+.atelier-gapette .ag-main h3 output{font:400 14px/1.3 var(--ag-font);text-transform:none;letter-spacing:0;color:var(--ag-ink-2)}
+
+/* étiquettes, aides, compteurs */
+.atelier-gapette .ag-main .field-label,.atelier-gapette .ag-main .placement legend,.atelier-gapette .ag-main .colors-heading>span,.atelier-gapette .ag-main .palette-row>span{font:600 13px/1.2 var(--ag-font-dossard);letter-spacing:.08em;text-transform:uppercase;color:var(--ag-ink-2)}
+.atelier-gapette .ag-main .field-label output,.atelier-gapette .ag-main .colors-heading output{font:600 14px/1.2 var(--ag-font);letter-spacing:0;text-transform:none;color:var(--ink)}
+.atelier-gapette .ag-main .field-label span{font:700 18px/1 var(--ag-font-dossard);letter-spacing:.06em;color:var(--ag-muted)}
+.atelier-gapette .ag-main .field-help,.atelier-gapette .ag-main .preview-note,.atelier-gapette .ag-main .ag-order-status{font-size:14px;line-height:1.5;color:var(--ag-ink-2)}
+.atelier-gapette .ag-main .preview-note{color:var(--ag-muted)}
+.atelier-gapette .ag-main .ag-text-error,.atelier-gapette .ag-main .ag-order-status[data-error=true],.atelier-gapette .ag-main .ag-fit-note{color:var(--ag-alert);font-size:14px}
+
+/* champs */
+.atelier-gapette .ag-main input[type=text],.atelier-gapette .ag-main select,.atelier-gapette .ag-main textarea,.atelier-gapette .ag-main .ag-buy table.variations select{height:48px;min-height:48px;border:1.5px solid var(--ag-line-strong);border-radius:var(--ag-radius-sm);background:var(--ag-field);color:var(--ink);font:400 16px/1.55 var(--ag-font);padding:8px 16px}
+.atelier-gapette .ag-main textarea{height:auto;min-height:120px;font:12px/1.4 monospace}
+.atelier-gapette .ag-main input[type=text]::placeholder{color:var(--ag-muted);opacity:1}
+.atelier-gapette .ag-main input[type=text]:hover,.atelier-gapette .ag-main select:hover{border-color:var(--ink)}
+.atelier-gapette .ag-main input[type=text]:focus,.atelier-gapette .ag-main select:focus{border-color:var(--ink);outline:2px solid var(--ag-focus);outline-offset:2px}
+.atelier-gapette .ag-main input[type=range],.atelier-gapette .ag-main .outline-control input{accent-color:var(--ag-accent)}
+.atelier-gapette .ag-main .outline-control{font-size:16px;color:var(--ink)}
+.atelier-gapette .ag-main .outline-control input{width:22px;height:22px;accent-color:var(--ink)}
+
+/* ColorPicker « card » : couleur de la gapette */
+.atelier-gapette .ag-main .ag-cap-color{min-height:56px;padding:12px 16px;gap:12px;border:1.5px solid var(--line);border-radius:var(--ag-radius);background:var(--ag-field);font:500 16px/1.2 var(--ag-font);box-shadow:none}
+.atelier-gapette .ag-main .ag-cap-color:hover{border-color:var(--ag-line-strong)}
+.atelier-gapette .ag-main .ag-cap-color[aria-pressed=true]{border-color:var(--ag-accent);box-shadow:inset 0 0 0 1px var(--ag-accent);background:var(--ag-field);font-weight:700}
+.atelier-gapette .ag-main .ag-cap-dot{width:28px;height:28px;border:1.5px solid var(--ag-line-strong);box-shadow:none}
+
+/* TypoPicker */
+.atelier-gapette .ag-main .font-button,.atelier-gapette .ag-main .pattern-button{background:var(--ag-field);border:1.5px solid var(--line);border-radius:var(--ag-radius);padding:12px 8px}
+.atelier-gapette .ag-main .font-button:hover,.atelier-gapette .ag-main .pattern-button:hover{border-color:var(--ag-line-strong);filter:none}
+.atelier-gapette .ag-main .font-button[aria-pressed=true],.atelier-gapette .ag-main .pattern-button[aria-pressed=true]{border:1.5px solid var(--ag-accent);box-shadow:inset 0 0 0 1px var(--ag-accent);background:var(--ag-soft);padding:12px 8px}
+.atelier-gapette .ag-main .font-button .font-label{font:400 12px/1.2 var(--ag-font);color:var(--ag-ink-2)}
+.atelier-gapette .ag-main .font-button[aria-pressed=true] .font-label{color:var(--ink);font-weight:600}
+
+/* OptionGroup : segments */
+.atelier-gapette .ag-main .segmented,.atelier-gapette .ag-studio-bar .view-controls{padding:4px;gap:4px;border:1.5px solid var(--ag-line-strong);border-radius:var(--ag-radius);background:var(--ag-field)}
+.atelier-gapette .ag-main .segmented span,.atelier-gapette .ag-studio-bar .view-controls button{font:600 16px/1 var(--ag-font);text-transform:none;letter-spacing:0;min-height:40px;display:flex;align-items:center;justify-content:center;padding:8px 16px;border-radius:5px;color:var(--ink)}
+.atelier-gapette .ag-main .segmented label:hover span,.atelier-gapette .ag-studio-bar .view-controls button:hover{background:var(--ag-fill-2)}
+.atelier-gapette .ag-main .segmented input:checked+span,.atelier-gapette .ag-studio-bar .view-controls button.active,.atelier-gapette .ag-studio-bar .view-controls button[aria-pressed=true]{background:var(--ink);color:var(--ag-fill)}
+.atelier-gapette .ag-studio-bar .view-controls button{font-size:14px;min-height:34px;padding:6px 12px}
+/* « Forme » : mêmes segments, en trois boutons */
+.atelier-gapette .ag-main .ag-shapes{display:flex;gap:4px;padding:4px;border:1.5px solid var(--ag-line-strong);border-radius:var(--ag-radius);background:var(--ag-field)}
+.atelier-gapette .ag-main .ag-shapes button{border:0;border-radius:5px;background:transparent;color:var(--ink);font:600 16px/1 var(--ag-font);min-height:40px;padding:8px 10px}
+.atelier-gapette .ag-main .ag-shapes button:hover{background:var(--ag-fill-2)}
+.atelier-gapette .ag-main .ag-shapes button[aria-pressed=true]{background:var(--ink);color:var(--ag-fill);border-color:var(--ink)}
+.atelier-gapette .ag-main .image-actions button{border:1.5px solid var(--ag-line-strong);border-radius:var(--ag-radius);background:transparent;color:var(--ink)}
+.atelier-gapette .ag-main .ag-shapes button{border:0}
+.atelier-gapette .ag-main .image-actions button[aria-pressed=true]{background:var(--ink);color:var(--ag-fill)}
+
+/* puces de texte (jusqu'à trois zones) */
+.atelier-gapette .ag-main .ag-text-tab{min-height:40px;border:1.5px solid var(--ag-line-strong);border-radius:var(--ag-radius);background:var(--ag-field);font:600 16px/1.2 var(--ag-font)}
+.atelier-gapette .ag-main .ag-text-tab[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--ag-fill)}
+.atelier-gapette .ag-main .ag-text-tab-n{width:24px;height:24px;border-radius:0;background:var(--ag-fill-2);font:700 14px/1 var(--ag-font-dossard)}
+.atelier-gapette .ag-main .ag-text-tab[aria-pressed=true] .ag-text-tab-n{background:var(--ag-accent-2);color:var(--ag-on-accent)}
+.atelier-gapette .ag-main .ag-text-add{border-style:dashed;background:transparent;color:var(--ag-ink-2)}
+.atelier-gapette .ag-main .ag-text-tab-x{border:1.5px solid var(--ag-line-strong);border-left:0;background:var(--ag-field);color:var(--ag-ink-2)}
+.atelier-gapette .ag-main .ag-text-tab-wrap[data-active=true] .ag-text-tab-x{background:var(--ink);border-color:var(--ink);color:var(--ag-fill)}
+.atelier-gapette .ag-main .ag-text-tab-x:hover,.atelier-gapette .ag-main .ag-text-tab-wrap[data-active=true] .ag-text-tab-x:hover,.atelier-gapette .ag-main .ag-text-toolbar .ag-tb-delete:hover{background:var(--ag-alert);border-color:var(--ag-alert);color:var(--ag-field)}
+.atelier-gapette .ag-main .ag-remove-text,.atelier-gapette .ag-main .ag-remove-text:hover,.atelier-gapette .ag-main .ag-text-toolbar .ag-tb-delete{color:var(--ag-alert);background-image:linear-gradient(var(--ag-alert),var(--ag-alert))}
+
+/* ColorPicker « dot » : couleur du texte */
+.atelier-gapette .ag-main .ag-swatch{width:32px;height:32px;border:1.5px solid var(--ag-line-strong);outline:0;transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s cubic-bezier(.2,.8,.2,1)}
+.atelier-gapette .ag-main .ag-swatch:hover{transform:scale(1.08)}
+.atelier-gapette .ag-main .ag-swatch[aria-pressed=true],.atelier-gapette .ag-main .palette-button[aria-pressed=true]{outline:0;border-color:transparent;box-shadow:0 0 0 3px var(--ag-fill-2),0 0 0 5px var(--ag-accent)}
+.atelier-gapette .ag-main .ag-swatches{gap:12px}
+.atelier-gapette .ag-main .ag-swatch-other{font-size:14px;color:var(--ag-ink-2)}
+.atelier-gapette .ag-main .ag-swatch-other input{width:32px;height:32px;border:1.5px solid var(--ag-line-strong)}
+
+/* boutons secondaires */
+.atelier-gapette .ag-main .ag-direct-button,.atelier-gapette .ag-main .ag-chip,.atelier-gapette .ag-main .detail-toggle,.atelier-gapette .ag-main .ag-file-button{border:1.5px solid var(--ag-line-strong);border-radius:var(--ag-radius);background:transparent;color:var(--ink);font:700 14px/1 var(--ag-font);text-transform:uppercase;letter-spacing:.04em;box-shadow:none}
+.atelier-gapette .ag-main .ag-direct-button{min-height:48px;padding:12px 16px;font-size:14px}
+.atelier-gapette .ag-main .ag-chip,.atelier-gapette .ag-main .detail-toggle{background:var(--ag-field);height:42px}
+.atelier-gapette .ag-main .ag-direct-button:hover,.atelier-gapette .ag-main .ag-chip:hover:not(:disabled),.atelier-gapette .ag-main .detail-toggle:hover,.atelier-gapette .ag-main .ag-file-button:hover{background:var(--ag-fill-2);border-color:var(--ink)}
+.atelier-gapette .ag-main .ag-direct-button[aria-pressed=true],.atelier-gapette .ag-main .detail-toggle[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--ag-fill)}
+.atelier-gapette .ag-main .ag-fine summary{font:600 14px/1.2 var(--ag-font);color:var(--ag-accent-text);text-decoration:none}
+.atelier-gapette .ag-main .ag-fine summary:hover{color:var(--ink)}
+
+/* achat : Quantity + bouton principal */
+.atelier-gapette .ag-main .ag-buy .quantity input.qty,.atelier-gapette .ag-main .ag-order .quantity input{width:72px;height:52px;border:1.5px solid var(--ag-line-strong);border-radius:var(--ag-radius);background:var(--ag-field);color:var(--ink);font:700 20px/1 var(--ag-font-dossard);text-align:center;padding:0 8px}
+.atelier-gapette .ag-main .ag-buy button.single_add_to_cart_button,.atelier-gapette .ag-main .ag-order .ag-order-button,.atelier-gapette .ag-main .ag-text-toolbar .ag-tb-done{background:var(--ag-accent);color:var(--ag-on-accent);border:1.5px solid var(--ag-accent);border-radius:var(--ag-radius);font:700 16px/1 var(--ag-font);text-transform:uppercase;letter-spacing:.04em}
+.atelier-gapette .ag-main .ag-buy button.single_add_to_cart_button:hover,.atelier-gapette .ag-main .ag-order .ag-order-button:hover,.atelier-gapette .ag-main .ag-text-toolbar .ag-tb-done:hover{background:var(--ag-accent);color:var(--ag-on-accent);filter:none}
+.atelier-gapette .ag-main .ag-buy button.single_add_to_cart_button:active,.atelier-gapette .ag-main .ag-order .ag-order-button:active{transform:translate(2px,2px)}
+.atelier-gapette .ag-main .ag-buy .price,.atelier-gapette .ag-main .ag-price{font:700 32px/1 var(--ag-font-dossard);letter-spacing:.04em;color:var(--ag-accent-text)}
+
+/* Summary : encadré pêche, carré (non cliquable) */
+.atelier-gapette .ag-main .configuration-summary{background:var(--ag-soft);border:1px solid var(--line);border-radius:0;padding:16px;gap:12px}
+.atelier-gapette .ag-main .summary-icon{color:var(--ag-accent-text);font-size:20px;line-height:1}
+.atelier-gapette .ag-main .configuration-summary .ag-summary-title{font:700 13px/1.2 var(--ag-font-dossard);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.atelier-gapette .ag-main .configuration-summary p{font-size:16px;line-height:1.5;color:var(--ink)}
+
+/* surfaces flottantes : carrées, l'ombre « musette » */
+.atelier-gapette .ag-main .ag-text-toolbar{border:1px solid var(--ink);border-radius:0;background:var(--ag-field);box-shadow:var(--shadow-musette,6px 6px 0 0 #14233c)}
+.atelier-gapette .ag-main .ag-tb-group,.atelier-gapette .ag-main .ag-tb-icon{border:1.5px solid var(--ag-line-strong);border-radius:var(--ag-radius);background:var(--ag-field)}
+.atelier-gapette .ag-main .ag-tb-group button{border-radius:5px}
+.atelier-gapette .ag-main .ag-tb-group button[aria-pressed=true]{background:var(--ink);color:var(--ag-fill)}
+.atelier-gapette .ag-main .ag-toast,.atelier-gapette .ag-main .ag-viewer.moving-text:after{border-radius:0;background:var(--ink);color:var(--ag-fill);box-shadow:none}
+.atelier-gapette .ag-main .ag-toast a{color:var(--ag-accent-2)}
+.atelier-gapette .ag-main .ag-edit-badge{border-radius:var(--ag-radius)}
+.atelier-gapette .ag-main .ag-handle{border:2px solid var(--ink);background:var(--ag-field);box-shadow:none}
+@container ag (max-width:760px){.atelier-gapette .ag-main h2{font-size:34px}.atelier-gapette .settings{border-top:0}.atelier-gapette .ag-studio-bar .view-controls button{font-size:12px;min-height:30px;padding:5px 8px}.atelier-gapette .ag-main .ag-chip,.atelier-gapette .ag-main .detail-toggle{height:36px;font-size:12px}}
+.atelier-gapette .ag-main .ag-swatches{gap:8px 10px}
+@container ag (max-width:760px){.atelier-gapette .ag-main .ag-buy button.single_add_to_cart_button,.atelier-gapette .ag-main .ag-order .ag-order-button{font-size:14px;letter-spacing:.02em;padding:0 10px;min-width:0}.atelier-gapette .ag-main .ag-buy .quantity input.qty,.atelier-gapette .ag-main .ag-order .quantity input{width:60px}}
+
+/* 0.9.9 — design system v3 : icônes maison (plus de glyphes ni d'émoji dans les commandes),
+   barre d'outils en IconButton, puces de texte « TextChips », cadre d'aperçu blanc fixe. */
+.atelier-gapette{--ag-blanc:var(--blanc-fixe,#fff)}
+.atelier-gapette .ag-ico{display:inline-block;flex:none;width:20px;height:20px;background:currentColor;-webkit-mask:var(--ag-i) center/contain no-repeat;mask:var(--ag-i) center/contain no-repeat;vertical-align:middle}
+.atelier-gapette .ag-ico-annuler{--ag-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 14 L4 9 L9 4 M4 9 H15 a5 5 0 0 1 0 10 H11'/%3E%3C/svg%3E")}
+.atelier-gapette .ag-ico-retablir{--ag-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 14 L20 9 L15 4 M20 9 H9 a5 5 0 0 0 0 10 H13'/%3E%3C/svg%3E")}
+.atelier-gapette .ag-ico-zoom{--ag-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M16.5 16.5 L21 21 M8 11 H14 M11 8 V14'/%3E%3C/svg%3E")}
+.atelier-gapette .ag-ico-corbeille{--ag-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 7 H20 M9 7 V4 H15 V7 M6 7 L7 20 H17 L18 7 M10 11 V16 M14 11 V16'/%3E%3C/svg%3E")}
+.atelier-gapette .ag-ico-plus{--ag-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5 V19 M5 12 H19'/%3E%3C/svg%3E")}
+
+/* cadre d'aperçu : la photo est détourée sur blanc, le cadre reste blanc dans les deux thèmes */
+.atelier-gapette .studio{background:var(--ag-blanc);border:1px solid var(--line)}
+
+/* Toolbar : IconButton (coton-50, bordure marine-500, Barlow 600 14px, sans capitales) */
+.atelier-gapette .ag-main .ag-chip,.atelier-gapette .ag-main .detail-toggle{display:inline-flex;align-items:center;gap:8px;height:40px;min-height:40px;padding:8px 12px;background:var(--ag-field);color:var(--ink);border:1.5px solid var(--ag-line-strong);border-radius:var(--ag-radius);font:600 14px/1 var(--ag-font);text-transform:none;letter-spacing:0}
+.atelier-gapette .ag-main .ag-chip-icon{width:40px;padding:8px;justify-content:center}
+.atelier-gapette .ag-main .ag-chip:disabled{opacity:.4;cursor:not-allowed}
+.atelier-gapette .ag-main .detail-toggle[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--ag-fill)}
+.atelier-gapette .ag-studio-bar .view-controls{padding:3px}
+.atelier-gapette .ag-studio-bar .view-controls button{font:600 14px/1 var(--ag-font);min-height:32px;padding:6px 12px}
+
+/* TextChips : une puce par zone, numéro sur carré jaune, corbeille, « ajouter » en pointillé */
+.atelier-gapette .ag-main .ag-text-tab{min-height:40px;padding:0 12px;gap:8px;font:600 14px/1.2 var(--ag-font)}
+.atelier-gapette .ag-main .ag-text-tab-n{width:22px;height:22px;background:var(--ag-accent-2);color:var(--ag-on-accent);font:700 13px/1 var(--ag-font-dossard)}
+.atelier-gapette .ag-main .ag-text-tab-x{width:36px;border-left:1px solid var(--line);color:inherit}
+.atelier-gapette .ag-main .ag-text-tab-x .ag-ico{width:16px;height:16px}
+.atelier-gapette .ag-main .ag-text-tab-x:hover{background:var(--ag-fill-2);border-color:var(--ag-line-strong);border-left-color:var(--line);color:var(--ag-alert)}
+.atelier-gapette .ag-main .ag-text-tab-wrap[data-active=true] .ag-text-tab-x{border-left-color:rgba(244,238,225,.3)}
+.atelier-gapette .ag-main .ag-text-tab-wrap[data-active=true] .ag-text-tab-x:hover{background:rgba(244,238,225,.15);border-color:var(--ink);border-left-color:rgba(244,238,225,.3);color:var(--ag-fill)}
+.atelier-gapette .ag-main .ag-text-add{padding:0 12px;color:var(--ag-ink-2)}
+.atelier-gapette .ag-main .ag-text-add:hover{color:var(--ink);border-color:var(--ink)}
+.atelier-gapette .ag-main .ag-text-add .ag-ico{width:16px;height:16px}
+.atelier-gapette .ag-main .ag-text-toolbar .ag-tb-delete .ag-ico{width:18px;height:18px}
+.atelier-gapette .ag-main .ag-file-button .ag-ico{width:16px;height:16px}
+@container ag (max-width:760px){.atelier-gapette .ag-main h2{font-size:32px}.atelier-gapette .ag-main .ag-chip[data-ag=undo]{width:40px;padding:8px;justify-content:center;font-size:0}.atelier-gapette .ag-main .detail-toggle{font-size:13px;padding:6px 10px;height:36px}.atelier-gapette .ag-main .ag-chip,.atelier-gapette .ag-main .ag-chip-icon{height:36px}}
+.atelier-gapette .settings-heading{flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.atelier-gapette .ag-main h2{font-size:36px}
+.atelier-gapette .ag-main .ag-remove-text{display:flex;align-items:center;gap:6px;background-image:none}
+.atelier-gapette .ag-main .ag-remove-text .ag-ico{width:16px;height:16px}
+@container ag (max-width:760px){.atelier-gapette .ag-main .detail-toggle [data-ag=detail-label]{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.atelier-gapette .ag-main .detail-toggle{width:36px;padding:0;justify-content:center}}
+
+/* 0.9.10 — l'exemple de typographie n'est plus coupé dans les cartes étroites (mobile) */
+.atelier-gapette .ag-main .font-button{padding:12px 4px;overflow:hidden}
+.atelier-gapette .ag-main .font-button[aria-pressed=true]{padding:12px 4px}
+.atelier-gapette .ag-main .font-button .font-sample{font-size:clamp(14px,17cqi,21px);overflow:visible;max-width:none}
+.atelier-gapette .ag-main .fonts{container-type:normal}
+.atelier-gapette .ag-main .font-button{container-type:inline-size}
+
+/* 0.10.0 — remise quantité sous le bouton, réassurance, fonctions annoncées (enregistrer, partager, logo).
+   Rappels du design system : non cliquable = carré et sans cadre ; cliquable = coins arrondis. */
+.atelier-gapette .ag-ico-check{--ag-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5 L10 17.5 L19 7'/%3E%3C/svg%3E")}
+.atelier-gapette .ag-ico-enregistrer{--ag-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 4 H17 V20 L12 16 L7 20 Z'/%3E%3C/svg%3E")}
+.atelier-gapette .ag-ico-partager{--ag-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 15 V4 M8 8 L12 4 L16 8 M5 12 V20 H19 V12'/%3E%3C/svg%3E")}
+
+/* remise quantité : une ligne sous le bouton, verte quand elle s'applique */
+.atelier-gapette .ag-main .ag-qty-note{margin:12px 0 0;font:600 14px/1.4 var(--ag-font);color:var(--ag-ink-2);font-variant-numeric:tabular-nums}
+.atelier-gapette .ag-main .ag-qty-note[data-applied=true]{color:var(--ag-ok)}
+
+/* réassurance : liste simple sous le bouton (pas de cadre, le résumé en a déjà un) */
+.atelier-gapette .ag-main .ag-reassurance{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.atelier-gapette .ag-main .ag-reassurance li{display:flex;align-items:flex-start;gap:8px;margin:0;padding:0;font:400 14px/1.4 var(--ag-font);color:var(--ink)}
+.atelier-gapette .ag-main .ag-reassurance .ag-ico{width:18px;height:18px;margin-top:1px;color:var(--ag-ok)}
+
+/* fonctions annoncées : boutons secondaires, message « bientôt disponible » au clic */
+.atelier-gapette .ag-main .ag-soon-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:8px 16px;border:1.5px solid var(--ag-line-strong);border-radius:var(--ag-radius);background:var(--ag-field);color:var(--ink);font:600 14px/1 var(--ag-font);cursor:pointer}
+.atelier-gapette .ag-main .ag-soon-button:hover{background:var(--ag-fill-2);border-color:var(--ink)}
+.atelier-gapette .ag-main .ag-soon-button .ag-ico{width:18px;height:18px}
+.atelier-gapette .ag-main .ag-soon-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.atelier-gapette .ag-main .ag-soon-actions .ag-soon-button{flex:1 1 140px}
+.atelier-gapette .ag-main .ag-logo-add{border-style:dashed;background:transparent;color:var(--ag-ink-2)}
+.atelier-gapette .ag-main .ag-logo-add:hover{color:var(--ink)}
+.atelier-gapette .ag-main .ag-logo-add .ag-ico{width:16px;height:16px}
+.atelier-gapette .ag-main .ag-logo-section h3{margin-bottom:14px}
+.atelier-gapette .ag-main .ag-soon-note{margin:10px 0 0}
+.atelier-gapette .ag-main .ag-soon-note:empty{display:none}
+.atelier-gapette .ag-main .ag-soon-note strong{font-weight:700;color:var(--ink)}
+
+/* bouton d'achat : avec les quantités de club le total s'allonge (« 1 620,00 € ») ;
+   le libellé passe sur deux lignes au lieu de déborder, le prix reste d'un seul tenant */
+.atelier-gapette .ag-main .ag-buy button.single_add_to_cart_button,.atelier-gapette .ag-main .ag-order .ag-order-button{white-space:normal;text-wrap:balance;height:auto;min-height:52px;padding-top:6px;padding-bottom:6px;line-height:1.15}
+
+/* 0.11 — vue à plat (réglage « Vue à plat », classe .ag-has-flat) : la visière à l'échelle, sous l'aperçu en 3/4.
+   Le client place ses textes à plat (ce qui sera imprimé) ; l'aperçu en 3/4 suit en direct, en lecture seule. */
+.atelier-gapette.ag-has-flat .studio{--ag-flat-h:clamp(200px,31%,320px)}
+.atelier-gapette.ag-has-flat .ag-viewer{bottom:calc(var(--ag-flat-h) + 22px)}
+.atelier-gapette.ag-has-flat .ag-main .ag-toast{bottom:calc(var(--ag-flat-h) + 34px)}
+.atelier-gapette .ag-flat{position:absolute;left:2%;right:2%;bottom:12px;height:var(--ag-flat-h);z-index:2;display:flex;flex-direction:column;border-top:1px solid var(--line);background:var(--ag-blanc)}
+.atelier-gapette .ag-flat-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:2px 12px;padding:10px 2px 4px;font:600 13px/1.2 var(--ag-font-dossard);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.atelier-gapette .ag-flat-face{color:var(--ag-ink-2)}
+.atelier-gapette .ag-flat-dims{font:400 13px/1.2 var(--ag-font);letter-spacing:0;text-transform:none;color:var(--ag-muted)}
+.atelier-gapette .ag-flat-stage{position:relative;flex:1;min-height:0;background:var(--ag-field);border:1px solid var(--line);touch-action:none}
+.atelier-gapette .ag-flat-stage:focus-visible{outline:2px solid var(--ag-focus);outline-offset:2px}
+.atelier-gapette .ag-flat-stage canvas{position:absolute;inset:0;display:block}
+.atelier-gapette .ag-flat-stage canvas.dragging{cursor:grabbing!important}
+.atelier-gapette .ag-flat-help{margin:4px 2px 0;font:400 12px/1.3 var(--ag-font);color:var(--ag-muted)}
+@container ag (max-width:760px){
+  .atelier-gapette.ag-has-flat .studio{height:clamp(390px,58svh,540px);min-height:390px;max-height:540px;--ag-flat-h:46%}
+  .atelier-gapette.ag-has-flat .ag-viewer{bottom:calc(var(--ag-flat-h) + 14px)}
+  .atelier-gapette .ag-flat{left:8px;right:8px;bottom:8px}
+  .atelier-gapette .ag-flat-head{padding:6px 2px 4px;font-size:12px}
+  .atelier-gapette .ag-flat-dims{font-size:12px}
+  .atelier-gapette .ag-flat-help{display:none}
+}
+/* avec la vue à plat, l'aperçu en 3/4 ne sert plus à éditer : pas de badge, de cadre ni de bouton « Modifier sur l'aperçu » */
+.atelier-gapette.ag-has-flat .ag-edit-layer,.atelier-gapette.ag-has-flat .ag-direct,.atelier-gapette.ag-has-flat .ag-text-toolbar{display:none!important}
+.atelier-gapette.ag-has-flat .ag-viewer canvas{cursor:default}

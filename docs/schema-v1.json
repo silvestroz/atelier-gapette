@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://la-gapette.fr/atelier-gapette/schema-v1.json",
+  "title": "Atelier Gapette — configuration v1",
+  "description": "Manufacturing choices for one cap. Validated identically by assets/src/schema.js (browser) and includes/class-ag-schema.php (server). Any unknown key is rejected.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "renderer_version", "model_id", "asset_version", "pattern_id", "colors", "text", "image"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "renderer_version": { "const": "decal-1" },
+    "model_id": { "const": "gapette-standard-v1" },
+    "asset_version": { "const": "materials-v1" },
+    "pattern_id": { "enum": ["peloton", "stripe", "check", "dot", "chevron", "plain", "breton", "wave", "confetti", "tartan", "sprint", "contour"] },
+    "colors": {
+      "type": "object", "additionalProperties": false,
+      "required": ["base", "accent", "light", "brim", "trim"],
+      "properties": {
+        "base":   { "$ref": "#/$defs/hex", "description": "Fabric" },
+        "accent": { "$ref": "#/$defs/hex", "description": "Pattern" },
+        "light":  { "$ref": "#/$defs/hex", "description": "Details" },
+        "brim":   { "$ref": "#/$defs/hex", "description": "Visor" },
+        "trim":   { "$ref": "#/$defs/hex", "description": "Piping" }
+      }
+    },
+    "text": {
+      "type": "object", "additionalProperties": false,
+      "required": ["value", "side", "font_id", "size_percent", "color", "outline", "position"],
+      "properties": {
+        "value": { "type": "string", "description": "24 graphemes max, spaces included. Character set: A–Z a–z 0–9, Latin accented letters (À–ÿ, Œ œ), space and . , ' ’ ! ? & : ; ( ) / + # @ * \" « » … € -. Never HTML.", "pattern": "^[A-Za-z0-9À-ÖØ-öø-ÿŒœ .,'’!?&:;()/+#@*\"«»…€-]*$" },
+        "side": { "enum": ["top", "bottom"], "description": "Top or underside of the visor" },
+        "font_id": { "enum": ["sport-v1", "retro-v1", "script-v1", "mono-v1"] },
+        "size_percent": { "type": "integer", "minimum": 60, "maximum": 130 },
+        "color": { "$ref": "#/$defs/hex" },
+        "outline": { "type": "boolean" },
+        "position": {
+          "type": "object", "additionalProperties": false, "required": ["x", "y"],
+          "description": "Local decal frame, before projection onto the visor. Neither screen pixels nor millimetres. The engine also clamps the position to keep it on the visor.",
+          "properties": {
+            "x": { "type": "integer", "minimum": -160, "maximum": 160 },
+            "y": { "type": "integer", "minimum": -100, "maximum": 100 }
+          }
+        }
+      }
+    },
+    "image": { "type": "null", "description": "Reserved: {asset_id, sha256, crop, source_dimensions} object for when photo upload is opened to orders (private uploads)." }
+  },
+  "$defs": { "hex": { "type": "string", "pattern": "^#[0-9a-f]{6}$" } }
+}
