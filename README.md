@@ -6,6 +6,21 @@ Customers type their texts on a **flat view of the visor, at scale** (millimetre
 
 > The user interface is in French. Code comments and documentation are in English.
 
+![Desktop: three-quarter preview above, flat visor at scale below, settings on the right](docs/screenshots/desktop.png)
+
+<table>
+<tr>
+<td width="62%"><img src="docs/screenshots/underside.png" alt="Text on the underside of the visor, visor up"></td>
+<td><img src="docs/screenshots/mobile.png" alt="Mobile layout"></td>
+</tr>
+<tr>
+<td>Underside text, read with the visor up: the flat view flips to match.</td>
+<td>Mobile (390 px), touch editing.</td>
+</tr>
+</table>
+
+<sub>Screenshots rendered with the La Gapette photographs, which are not part of this repository.</sub>
+
 ## Features
 
 - Up to 3 texts, on the top or the underside of the visor; 12 locally served fonts (SIL OFL 1.1, Permanent Marker under Apache 2.0); colour, outline, size, curvature and rotation; move with mouse, touch or keyboard (1 mm per arrow key).
